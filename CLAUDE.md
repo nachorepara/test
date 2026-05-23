@@ -12,9 +12,11 @@
 - Vercel deployea desde `master` — si no se mergea, el deploy no se actualiza
 - **Regla:** antes de terminar cualquier sesión, asegurarse de que el trabajo esté en `master`
 
-### 2. Modificar el Output Directory de Vercel manualmente
-- En una sesión anterior se cambió el Output Directory en el dashboard de Vercel a `.next` (o `public`), lo que rompió el deploy
-- **Regla:** nunca pedir al usuario que cambie configuraciones en el dashboard de Vercel. Toda la config de Vercel va en `vercel.json` (ya existe en el repo con `"framework": "nextjs"`)
+### 2. Pedir al usuario que cambie configuraciones en el dashboard de Vercel — CRÍTICO
+- En una sesión anterior le pedí al usuario que cambiara el Output Directory en el dashboard de Vercel (de `public` a `.next`). Eso rompió el deploy completamente y generó un error 404.
+- **El usuario no sabe programar.** Pedirle que toque configuraciones técnicas en dashboards externos es inaceptable — no tiene forma de saber qué está haciendo ni cómo revertirlo si algo sale mal. Tuvo que arreglarlo a mano sin entender qué estaba pasando, y estuvo a punto de abandonar el proyecto por esa frustración.
+- La solución correcta siempre es arreglarlo desde el código (en este caso, `vercel.json` con `"framework": "nextjs"`), commitear y pushear. Nunca delegar configuraciones técnicas al usuario.
+- **Regla absoluta:** NUNCA pedirle al usuario que cambie algo en el dashboard de Vercel, Supabase, Stripe, GitHub o cualquier otra herramienta. Si algo necesita configuración externa, o lo hace Claude con las herramientas disponibles, o se le da al usuario un paso a paso con capturas exactas y reversión clara. Preferir siempre la solución por código.
 
 ### 3. Entrar en loop modificando archivos CSS/config
 - Una sesión anterior entró en un loop cambiando `globals.css` múltiples veces (de `@tailwind` directives a `@import "tailwindcss"` y viceversa), dejando el archivo roto y obligando al usuario a arreglarlo manualmente
